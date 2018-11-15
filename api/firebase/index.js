@@ -1,7 +1,7 @@
 // methods to call firebase db
 const db = require("./firebase").database;
 const cache = require("../../cache");
-const moment = require('moment');
+const moment = require("moment");
 
 const sendVideoToDB = async video => {
   if (video.videoId in cache.videos) {
@@ -10,11 +10,10 @@ const sendVideoToDB = async video => {
   }
   video.timestamp = moment().format();
   const dbBaseRef = db.ref(process.env.YOUTUBE_DB + "/videos");
-      // Video does not exist, we should update
-      const key = await dbBaseRef.push().key;
-      dbBaseRef.child(key).update(video);
-      cache.videos[video.videoId] = 1; // add to cache
-  
+  // Video does not exist, we should update
+  const key = await dbBaseRef.push().key;
+  dbBaseRef.child(key).update(video);
+  cache.videos[video.videoId] = 1; // add to cache
 };
 
 const sendInfoToDB = async info => {
@@ -25,10 +24,18 @@ const sendInfoToDB = async info => {
 const clearOldChat = async () => {
   const ref = db.ref("livechat");
   ref.once("value", async videoId => {
-    videoId.ref.remove()
+    videoId.ref.remove();
+  });
+};
+
+const clearOldVideos = async () => {
+  const dbBaseRef = db.ref(process.env.YOUTUBE_DB + "/videos");
+  dbBaseRef.once("value", async videoId => {
+    videoId.ref.remove();
   });
 };
 
 module.exports.sendVideoToDB = sendVideoToDB;
 module.exports.sendInfoToDB = sendInfoToDB;
 module.exports.clearOldChat = clearOldChat;
+module.exports.clearOldVideos = clearOldVideos;

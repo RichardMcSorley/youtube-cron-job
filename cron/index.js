@@ -2,7 +2,7 @@
 const schedule = require("node-schedule");
 const cache = require("../cache");
 const api = require("../api");
-const logger = require('../api/logger');
+const logger = require("../api/logger");
 
 const everyHour = () => {
   // log cache and count every hour
@@ -26,6 +26,7 @@ const everyMidnight = () => {
   rule.minute = 0; // every time the clock reaches 0 minutes
   rule.hour = 0; // every time the clock reaches 0 hours
   schedule.scheduleJob(rule, () => {
+    api.firebase.clearOldVideos();
     logger.info("MIDNIGHT: garbage collection");
     cache.videos = {};
     cache.timesHitYoutube = 0;
@@ -41,13 +42,11 @@ const everyMin = () => {
     const live = await api.youtube.getLiveVideos();
     api.youtube.updateDBwithVideos(regular);
     api.youtube.updateDBwithVideos(live);
-    api.firebase.clearOldChat()
+    api.firebase.clearOldChat();
     logger.info(
       `EVERY MIN: Ran youtube api ${
         cache.timesHitYoutube
-      } | videoId's are ${JSON.stringify(
-        cache.videos
-      )}`
+      } | videoId's are ${JSON.stringify(cache.videos)}`
     );
   });
 };
