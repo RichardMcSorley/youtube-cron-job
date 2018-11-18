@@ -7,12 +7,7 @@ const logger = require("../logger");
 
 const infoConstructor = item => {
   const { id, snippet, statistics } = item;
-  const {
-    title,
-    customUrl,
-    description,
-    thumbnails
-  } = snippet;
+  const { title, customUrl, description, thumbnails } = snippet;
   const smallImage = thumbnails.default.url;
   const mediumImage = thumbnails.medium.url;
   const largeImage = thumbnails.high.url;
@@ -21,7 +16,7 @@ const infoConstructor = item => {
   return {
     id,
     title,
-    url: 'https://youtube.com/' + customUrl,
+    url: "https://youtube.com/" + customUrl,
     description,
     smallImage,
     mediumImage,
@@ -67,7 +62,7 @@ const getChannelVideos = async () => {
   let result;
   try {
     result = await request({
-      url: `https://www.googleapis.com/youtube/v3/search?key=${YOUTUBE_API_KEY}&channelId=${YOUTUBE_CHANNEL_ID}&part=snippet&type=video&eventType=completed&order=date&maxResults=5`,
+      url: `https://www.googleapis.com/youtube/v3/search?key=${YOUTUBE_API_KEY}&channelId=${YOUTUBE_CHANNEL_ID}&part=snippet&type=video&order=date&maxResults=5`,
       method: "GET",
       json: true
     });
@@ -124,7 +119,7 @@ const getChannelDetailsAndUpdateDB = async () => {
   }
 };
 
-const updateDBwithVideos = async ({items}) => {
+const updateDBwithVideos = async ({ items }) => {
   if (items && items.length > 0) {
     items.forEach(item => {
       firebase.sendVideoToDB(videoConstructor(item));
