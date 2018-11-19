@@ -11,8 +11,10 @@ const sendVideoToDB = async video => {
   video.timestamp = moment().format();
   const dbBaseRef = db.ref(process.env.YOUTUBE_DB + "/videos");
   // Video does not exist, we should update
-  const key = await dbBaseRef.push().key;
-  dbBaseRef.child(key).update(video);
+  //const key = await dbBaseRef.push().
+  dbBaseRef
+    .child(moment(video.publishedAt, "YYYY-MM-DDThh:mm:ss.sZ").format("x"))
+    .update(video);
   cache.videos[video.videoId] = 1; // add to cache
 };
 
