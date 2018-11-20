@@ -9,12 +9,11 @@ const sendVideoToDB = async video => {
     return;
   }
   video.timestamp = moment().format();
-  const dbBaseRef = db.ref(process.env.YOUTUBE_DB + "/videos");
+  const dbBaseRef = db.ref(process.env.YOUTUBE_DB + "/tasks");
   // Video does not exist, we should update
-  //const key = await dbBaseRef.push().
-  dbBaseRef
-    .child(moment(video.publishedAt, "YYYY-MM-DDThh:mm:ss.sZ").format("x"))
-    .update(video);
+  const key = await dbBaseRef.push().key;
+  //moment(video.publishedAt, "YYYY-MM-DDThh:mm:ss.sZ").format("x")
+  dbBaseRef.child(key).update(video);
   cache.videos[video.videoId] = 1; // add to cache
 };
 
@@ -23,21 +22,21 @@ const sendInfoToDB = async info => {
   await dbBaseRef.set(info);
 };
 
-const clearOldChat = async () => {
-  const ref = db.ref("livechat");
-  ref.once("value", async videoId => {
-    videoId.ref.remove();
-  });
-};
+// const clearOldChat = async () => {
+//   const ref = db.ref("livechat");
+//   ref.once("value", async videoId => {
+//     videoId.ref.remove();
+//   });
+// };
 
-const clearOldVideos = async () => {
-  const dbBaseRef = db.ref(process.env.YOUTUBE_DB + "/videos");
-  dbBaseRef.once("value", async videoId => {
-    videoId.ref.remove();
-  });
-};
+// const clearOldVideos = async () => {
+//   const dbBaseRef = db.ref(process.env.YOUTUBE_DB + "/videos");
+//   dbBaseRef.once("value", async videoId => {
+//     videoId.ref.remove();
+//   });
+// };
 
 module.exports.sendVideoToDB = sendVideoToDB;
 module.exports.sendInfoToDB = sendInfoToDB;
-module.exports.clearOldChat = clearOldChat;
-module.exports.clearOldVideos = clearOldVideos;
+// module.exports.clearOldChat = clearOldChat;
+// module.exports.clearOldVideos = clearOldVideos;

@@ -26,35 +26,29 @@ const everyMidnight = () => {
   rule.minute = 0; // every time the clock reaches 0 minutes
   rule.hour = 0; // every time the clock reaches 0 hours
   schedule.scheduleJob(rule, () => {
-    api.firebase.clearOldVideos();
+    //api.firebase.clearOldVideos();
     logger.info("MIDNIGHT: garbage collection");
     cache.videos = {};
     cache.timesHitYoutube = 0;
   });
 };
 
-const everyMin = () => {
+const every30s = () => {
   // batch running every 1 mins
   const rule = new schedule.RecurrenceRule();
-  rule.minute = new schedule.Range(0, 59, 1);
+  rule.second = new schedule.Range(0, 59, 30);
   schedule.scheduleJob(rule, async () => {
     const regular = await api.youtube.getChannelVideos();
     const live = await api.youtube.getLiveVideos();
     api.youtube.updateDBwithVideos(regular);
     api.youtube.updateDBwithVideos(live);
-    api.firebase.clearOldChat();
-    logger.info(
-      `EVERY MIN: Ran youtube api ${
-        cache.timesHitYoutube
-      } | videoId's are ${JSON.stringify(cache.videos)}`
-    );
   });
 };
 
 const run = () => {
   everyMidnight();
   everyHour();
-  everyMin();
+  every30s();
 };
 
 run();
