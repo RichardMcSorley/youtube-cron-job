@@ -6,14 +6,20 @@ const firebase = require("./api/firebase");
 process.on("uncaughtException", err => {
   const errorMsg = err.stack.replace(new RegExp(`${__dirname}/`, "g"), "./");
   console.error("Uncaught Exception: ", errorMsg);
-  // process.exit(1); //Eh, should be fine, but maybe handle this?
+  firebase.disconnectRunner();
+  process.exit(0);
 });
 
 process.on("unhandledRejection", err => {
   console.error("Uncaught Promise Error: ", err);
-  // process.exit(1); //Eh, should be fine, but maybe handle this?
+  firebase.disconnectRunner();
+  process.exit(0);
 });
 process.on("SIGINT", function() {
+  console.log("Starting queue shutdown");
+  firebase.disconnectRunner();
+});
+process.on("SIGTERM", function() {
   console.log("Starting queue shutdown");
   firebase.disconnectRunner();
 });

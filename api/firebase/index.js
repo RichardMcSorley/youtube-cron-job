@@ -70,6 +70,9 @@ const sendVideoToDB = async ({ videoId, liveBroadcastContent, ...rest }) => {
   const dbBaseRef = db.ref(videoDBRes + "/tasks");
   const key = await dbBaseRef.push().key;
   dbBaseRef.child(key).update(video);
+  const dbBaseRef2 = db.ref(videoDBRes + 2 + "/tasks");
+  const key2 = await dbBaseRef2.push().key;
+  dbBaseRef2.child(key2).update(video);
   cache.videos[videoId] = 1; // add to cache
 };
 
