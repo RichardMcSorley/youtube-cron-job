@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: koreanow-regular-videos
 spec:
-  schedule: "0 * * * *"
+  schedule: "* * * * *"
   suspend: false
   concurrencyPolicy: Forbid
   jobTemplate:
@@ -13,24 +13,7 @@ spec:
           containers:
           - name: koreanow-regular-videos-0
             image: gcr.io/dongdongchat/youtube-cron-job
-            command: ["npm start"]
-            env:
-              - name: FUNC_NAME
-                value: "getVideosAndUpdateDB"
-              - name: FUNC_PARAM
-                value: "?&channelId=UCR-L8oZkHzgDh1ahJhH2WDQ&part=snippet&type=video&order=date&maxResults=5"
-              - name: LIB_NAME
-                value: "youtube"
-               - name: FIREBASE_DATABASE_URL
-                value: https://dongdongchat.firebaseio.com
-            envFrom:
-            - configMapRef:
-                name: firebase
-            - configMapRef:
-                name: youtube-api-key-1
-          - name: koreanow-regular-videos-10
-            image: gcr.io/dongdongchat/youtube-cron-job
-            command: ["sleep 10 && npm start"]
+            command: ["npm", "start"]
             env:
               - name: FUNC_NAME
                 value: "getVideosAndUpdateDB"
@@ -41,77 +24,9 @@ spec:
               - name: FIREBASE_DATABASE_URL
                 value: https://dongdongchat.firebaseio.com
             envFrom:
-            - configMapRef:
-                name: firebase
-            - configMapRef:
-                name: youtube-api-key-2
-          - name: koreanow-regular-videos-20
-            image: gcr.io/dongdongchat/youtube-cron-job
-            command: ["sleep 20 && npm start"]
-            env:
-              - name: FUNC_NAME
-                value: "getVideosAndUpdateDB"
-              - name: FUNC_PARAM
-                value: "?&channelId=UCR-L8oZkHzgDh1ahJhH2WDQ&part=snippet&type=video&order=date&maxResults=5"
-              - name: LIB_NAME
-                value: "youtube"
-              - name: FIREBASE_DATABASE_URL
-                value: https://dongdongchat.firebaseio.com
-            envFrom:
-            - configMapRef:
-                name: firebase
-            - configMapRef:
-                name: youtube-api-key-2
-          - name: koreanow-regular-videos-30
-            image: gcr.io/dongdongchat/youtube-cron-job
-            command: ["sleep 30 && npm start"]
-            env:
-              - name: FUNC_NAME
-                value: "getVideosAndUpdateDB"
-              - name: FUNC_PARAM
-                value: "?&channelId=UCR-L8oZkHzgDh1ahJhH2WDQ&part=snippet&type=video&order=date&maxResults=5"
-              - name: LIB_NAME
-                value: "youtube"
-              - name: FIREBASE_DATABASE_URL
-                value: https://dongdongchat.firebaseio.com
-            envFrom:
-            - configMapRef:
-                name: firebase
-            - configMapRef:
-                name: youtube-api-key-3
-          - name: koreanow-regular-videos-40
-            image: gcr.io/dongdongchat/youtube-cron-job
-            command: ["sleep 40 && npm start"]
-            env:
-              - name: FUNC_NAME
-                value: "getVideosAndUpdateDB"
-              - name: FUNC_PARAM
-                value: "?&channelId=UCR-L8oZkHzgDh1ahJhH2WDQ&part=snippet&type=video&order=date&maxResults=5"
-              - name: LIB_NAME
-                value: "youtube"
-              - name: FIREBASE_DATABASE_URL
-                value: https://dongdongchat.firebaseio.com
-            envFrom:
-            - configMapRef:
-                name: firebase
-            - configMapRef:
-                name: youtube-api-key-1
-          - name: koreanow-regular-videos-50
-            image: gcr.io/dongdongchat/youtube-cron-job
-            command: ["sleep 50 && npm start"]
-            env:
-              - name: FUNC_NAME
-                value: "getVideosAndUpdateDB"
-              - name: FUNC_PARAM
-                value: "?&channelId=UCR-L8oZkHzgDh1ahJhH2WDQ&part=snippet&type=video&order=date&maxResults=5"
-              - name: LIB_NAME
-                value: "youtube"
-              - name: FIREBASE_DATABASE_URL
-                value: https://dongdongchat.firebaseio.com
-            envFrom:
-            - configMapRef:
-                name: firebase
-            - configMapRef:
-                name: youtube-api-key-2
+              - configMapRef:
+                  name: firebase
+              - configMapRef:
+                  name: youtube-api-key-2
           restartPolicy: OnFailure
           hostNetwork: true
