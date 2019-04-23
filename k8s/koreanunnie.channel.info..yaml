@@ -1,0 +1,30 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: koreanunnie-channel-info
+spec:
+  schedule: "0 * * * *"
+  suspend: false
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: koreanunnie-channel-info
+            image: gcr.io/dongdongchat/youtube-cron-job
+            env:
+              - name: FUNC_NAME
+                value: "getChannelDetailsAndUpdateDB"
+              - name: FUNC_PARAM
+                value: "?part=snippet,brandingSettings,statistics&id=UCcA88_Z7wQWMoQ9bKwjuanA"
+              - name: LIB_NAME
+                value: "youtube"
+            envFrom:
+            - configMapRef:
+                name: firebase
+            - configMapRef:
+                name: youtube-api-key-1
+          restartPolicy: OnFailure
+          hostNetwork: true
+   
