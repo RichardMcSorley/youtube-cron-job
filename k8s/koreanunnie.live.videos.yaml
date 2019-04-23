@@ -1,0 +1,117 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: koreanunnie-live-videos
+spec:
+  schedule: "0 * * * *"
+  suspend: false
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: koreanunnie-live-videos-0
+            image: gcr.io/dongdongchat/youtube-cron-job
+            command: ["npm start"]
+            env:
+              - name: FUNC_NAME
+                value: "getVideosAndUpdateDB"
+              - name: FUNC_PARAM
+                value: "?channelId=UCcA88_Z7wQWMoQ9bKwjuanA&part=snippet&type=video&eventType=live"
+              - name: LIB_NAME
+                value: "youtube"
+               - name: FIREBASE_DATABASE_URL
+                value: https://dongdongchat.firebaseio.com
+            envFrom:
+            - configMapRef:
+                name: firebase
+            - configMapRef:
+                name: youtube-api-key-3
+          - name: koreanunnie-live-videos-10
+            image: gcr.io/dongdongchat/youtube-cron-job
+            command: ["sleep 10 && npm start"]
+            env:
+              - name: FUNC_NAME
+                value: "getVideosAndUpdateDB"
+              - name: FUNC_PARAM
+                value: "?channelId=UCcA88_Z7wQWMoQ9bKwjuanA&part=snippet&type=video&eventType=live"
+              - name: LIB_NAME
+                value: "youtube"
+              - name: FIREBASE_DATABASE_URL
+                value: https://dongdongchat.firebaseio.com
+            envFrom:
+            - configMapRef:
+                name: firebase
+            - configMapRef:
+                name: youtube-api-key-1
+          - name: koreanunnie-live-videos-20
+            image: gcr.io/dongdongchat/youtube-cron-job
+            command: ["sleep 20 && npm start"]
+            env:
+              - name: FUNC_NAME
+                value: "getVideosAndUpdateDB"
+              - name: FUNC_PARAM
+                value: "?channelId=UCcA88_Z7wQWMoQ9bKwjuanA&part=snippet&type=video&eventType=live"
+              - name: LIB_NAME
+                value: "youtube"
+              - name: FIREBASE_DATABASE_URL
+                value: https://dongdongchat.firebaseio.com
+            envFrom:
+            - configMapRef:
+                name: firebase
+            - configMapRef:
+                name: youtube-api-key-2
+          - name: koreanunnie-live-videos-30
+            image: gcr.io/dongdongchat/youtube-cron-job
+            command: ["sleep 30 && npm start"]
+            env:
+              - name: FUNC_NAME
+                value: "getVideosAndUpdateDB"
+              - name: FUNC_PARAM
+                value: "?channelId=UCcA88_Z7wQWMoQ9bKwjuanA&part=snippet&type=video&eventType=live"
+              - name: LIB_NAME
+                value: "youtube"
+              - name: FIREBASE_DATABASE_URL
+                value: https://dongdongchat.firebaseio.com
+            envFrom:
+            - configMapRef:
+                name: firebase
+            - configMapRef:
+                name: youtube-api-key-3
+          - name: koreanunnie-live-videos-40
+            image: gcr.io/dongdongchat/youtube-cron-job
+            command: ["sleep 40 && npm start"]
+            env:
+              - name: FUNC_NAME
+                value: "getVideosAndUpdateDB"
+              - name: FUNC_PARAM
+                value: "?channelId=UCcA88_Z7wQWMoQ9bKwjuanA&part=snippet&type=video&eventType=live"
+              - name: LIB_NAME
+                value: "youtube"
+              - name: FIREBASE_DATABASE_URL
+                value: https://dongdongchat.firebaseio.com
+            envFrom:
+            - configMapRef:
+                name: firebase
+            - configMapRef:
+                name: youtube-api-key-1
+          - name: koreanunnie-live-videos-50
+            image: gcr.io/dongdongchat/youtube-cron-job
+            command: ["sleep 50 && npm start"]
+            env:
+              - name: FUNC_NAME
+                value: "getVideosAndUpdateDB"
+              - name: FUNC_PARAM
+                value: "?channelId=UCcA88_Z7wQWMoQ9bKwjuanA&part=snippet&type=video&eventType=live"
+              - name: LIB_NAME
+                value: "youtube"
+              - name: FIREBASE_DATABASE_URL
+                value: https://dongdongchat.firebaseio.com
+            envFrom:
+            - configMapRef:
+                name: firebase
+            - configMapRef:
+                name: youtube-api-key-2
+          restartPolicy: OnFailure
+          hostNetwork: true

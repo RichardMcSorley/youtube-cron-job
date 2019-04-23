@@ -20,11 +20,13 @@ spec:
                 value: "?part=snippet,brandingSettings,statistics&id=UCR-L8oZkHzgDh1ahJhH2WDQ"
               - name: LIB_NAME
                 value: "youtube"
+              - name: FIREBASE_DATABASE_URL
+                value: https://dongdongchat.firebaseio.com
             envFrom:
             - configMapRef:
                 name: firebase
             - configMapRef:
-                name: youtube-api-key-1
+                name: youtube-api-key-3
           restartPolicy: OnFailure
           hostNetwork: true
    
