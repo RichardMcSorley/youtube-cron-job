@@ -3,6 +3,8 @@ jobs:
   deploy:
     docker:
       - image: google/cloud-sdk
+        environment:
+          - GOOGLE_APPLICATION_CREDENTIALS: ${HOME}/gcloud-service-key.json
     steps:
       - checkout
       - run: 
@@ -15,7 +17,6 @@ jobs:
             gcloud auth activate-service-account --key-file=${HOME}/gcloud-service-key.json
             gcloud container clusters get-credentials rose --zone us-central1-a --project dongdongchat
             kubectl config set-context $(kubectl config current-context) --namespace=prod
-            gcloud config set container/use_client_certificate True
       - run: 
           name: Deploy to Kubernetes
           command: |
