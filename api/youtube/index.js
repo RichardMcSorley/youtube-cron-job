@@ -117,6 +117,9 @@ const getVideosAndUpdateDB = async (query) => {
   try {
     const { items = [] } = await getBySearch(query);
     console.log(`Got ${items.length} from query ${query}`);
+    if(items.length === 0){
+      return 'nothing to do'
+    }
     await startClient();
     for (let index = 0; index < items.length; index++) {
       const item = items[index];
