@@ -1,6 +1,7 @@
 
 const request = require("request-promise");
 const firebase = require("../firebase");
+const { sendMessage } = require('../mq');
 const YOUTUBE_API_KEY = process.env.YOUTUBE_API_KEY;
 
 const infoConstructor = item => {
@@ -82,7 +83,7 @@ const getBySearch = async query => {
     return result;
   } catch (error) {
     console.error(error);
-    return error;
+    process.exit(1)
   }
 };
 
@@ -99,7 +100,7 @@ const getByChannels = async query => {
     return result;
   } catch (error) {
     console.error(error);
-    return error;
+    process.exit(1)
   }
 };
 
@@ -116,12 +117,11 @@ const getVideosAndUpdateDB = async (query) => {
   const { items = [] } = await getBySearch(query);
   for (let index = 0; index < items.length; index++) {
     const item = items[index];
-    await firebase.sendVideoToDB({ ...videoConstructor(item) });
+  
+    await sendMessage('new_youtube_video', {...videoConstructor(item)})
   }
   return 'done';
 };
-
-
 
 
 module.exports = {

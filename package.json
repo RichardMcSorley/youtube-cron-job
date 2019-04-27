@@ -10,15 +10,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "bunyan": "^1.8.12",
-    "chalk": "^2.4.1",
-    "dogapi": "^2.8.3",
     "dotenv": "^6.1.0",
     "firebase": "^5.5.8",
     "firebase-admin": "^6.1.0",
     "moment": "^2.22.2",
-    "node-schedule": "^1.3.0",
-    "ramda": "^0.25.0",
-    "request-promise": "^4.2.2"
+    "mqlight": "^2.0.2019041500",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.2",
+    "xml-js": "^1.6.11"
   }
 }

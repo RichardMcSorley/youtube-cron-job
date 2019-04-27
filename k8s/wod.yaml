@@ -1,9 +1,9 @@
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-  name: koreanunnie-live-videos
+  name: word-of-the-day
 spec:
-  schedule: "* * * * *"
+  schedule: "0 22 * * *"
   suspend: false
   concurrencyPolicy: Forbid
   jobTemplate:
@@ -11,19 +11,15 @@ spec:
       template:
         spec:
           containers:
-          - name: koreanunnie-live-videos
+          - name: word-of-the-day
             image: gcr.io/dongdongchat/youtube-cron-job
             env:
               - name: FUNC_NAME
-                value: "getVideosAndUpdateDB"
-              - name: FUNC_PARAM
-                value: "?channelId=UCcA88_Z7wQWMoQ9bKwjuanA&part=snippet&type=video&eventType=live"
+                value: "getWord"
               - name: LIB_NAME
-                value: "youtube"
+                value: "wod"
             envFrom:
               - configMapRef:
                   name: firebase
-              - configMapRef:
-                  name: youtube-api-key-2
           restartPolicy: OnFailure
           hostNetwork: true

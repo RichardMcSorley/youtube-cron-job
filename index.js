@@ -1,11 +1,12 @@
 require("dotenv").config();
-
 process.on("uncaughtException", err => {
-  process.exit(0);
+  console.log(err)
+  process.exit(1);
 });
 
 process.on("unhandledRejection", err => {
-  process.exit(0);
+  console.log(err)
+  process.exit(1);
 });
 
 require('./cron');

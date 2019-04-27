@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: koreanunnie-regular-videos
 spec:
-  schedule: "* * * * *"
+  schedule: "0,15,30,45 * * * *"
   suspend: false
   concurrencyPolicy: Forbid
   jobTemplate:
@@ -11,7 +11,7 @@ spec:
       template:
         spec:
           containers:
-          - name: koreanunnie-regular-videos-0
+          - name: koreanunnie-regular-videos
             image: gcr.io/dongdongchat/youtube-cron-job
             env:
               - name: FUNC_NAME
@@ -20,12 +20,10 @@ spec:
                 value: "?&channelId=UCcA88_Z7wQWMoQ9bKwjuanA&part=snippet&type=video&order=date&maxResults=5"
               - name: LIB_NAME
                 value: "youtube"
-              - name: FIREBASE_DATABASE_URL
-                value: https://dongdongchat.firebaseio.com
             envFrom:
               - configMapRef:
                   name: firebase
               - configMapRef:
-                  name: youtube-api-key-2
+                  name: youtube-api-key-4
           restartPolicy: OnFailure
           hostNetwork: true

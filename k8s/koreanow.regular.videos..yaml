@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: koreanow-regular-videos
 spec:
-  schedule: "* * * * *"
+  schedule: "0,15,30,45 * * * *"
   suspend: false
   concurrencyPolicy: Forbid
   jobTemplate:
@@ -11,9 +11,8 @@ spec:
       template:
         spec:
           containers:
-          - name: koreanow-regular-videos-0
+          - name: koreanow-regular-videos
             image: gcr.io/dongdongchat/youtube-cron-job
-            command: ["npm", "start"]
             env:
               - name: FUNC_NAME
                 value: "getVideosAndUpdateDB"
@@ -21,8 +20,6 @@ spec:
                 value: "?&channelId=UCR-L8oZkHzgDh1ahJhH2WDQ&part=snippet&type=video&order=date&maxResults=5"
               - name: LIB_NAME
                 value: "youtube"
-              - name: FIREBASE_DATABASE_URL
-                value: https://dongdongchat.firebaseio.com
             envFrom:
               - configMapRef:
                   name: firebase

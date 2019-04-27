@@ -1,6 +1,11 @@
 version: "3"
 services:
-  youtube-cron:
-    build:
-      context: .
-    env_file: .env
+  mqlight:
+    container_name: mqlight
+    image: ibmcom/mqlight:1.0
+    network_mode: host
+    environment:
+      - "LICENSE=accept"
+    ports:
+      - "5672:5672"
+      - "9180:9180"

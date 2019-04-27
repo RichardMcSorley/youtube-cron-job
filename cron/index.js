@@ -1,6 +1,8 @@
 const youtube = require("../api/youtube");
+const wod = require("../api/wod");
 const functions = {
-  youtube
+  youtube,
+  wod
 };
 const {LIB_NAME, FUNC_NAME, FUNC_PARAM} = process.env;
 
