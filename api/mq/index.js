@@ -11,13 +11,13 @@ const startClient = ()=>{
         });
     });
 }
-const sendMessage = ({client, topic, topicData}) =>{
+const sendMessage = ({client, topic, data}) =>{
     return new Promise((resolve, reject)=>{
-        client.send(topic, topicData, function (err, data) {
+        client.send(topic, data, function (err, data) {
             if(err){
                 reject(err);
             }
-            console.log('Sent mq:', data, topicData);
+            console.log('Sent mq:', data, data);
             resolve();
         });
     });

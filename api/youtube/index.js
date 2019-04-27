@@ -120,10 +120,10 @@ const getVideosAndUpdateDB = async (query) => {
     if(items.length === 0){
       return 'nothing to do'
     }
-    await startClient();
+    const startClient = await startClient();
     for (let index = 0; index < items.length; index++) {
       const item = items[index];
-      await sendMessage('new_youtube_video', {...videoConstructor(item)})
+      await sendMessage({client: startClient, topic:'new_youtube_video', data:{...videoConstructor(item)}})
     }
   } catch (error) {
     console.log(error);
