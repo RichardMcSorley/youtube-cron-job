@@ -1,5 +1,5 @@
 FROM node:10-alpine
-ENV NODE_ENV=development
+ENV NODE_ENV=production
 EXPOSE 8080
 
 RUN npm i npm@latest -g

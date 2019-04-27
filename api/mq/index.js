@@ -10,7 +10,7 @@ const startClient = ()=>{
         });
         client.on('started', function() {
             console.log('started mq');
-            resolve(sendClient)
+            resolve(client)
         });
         client.on('error', function (err) {
             console.error(err)
