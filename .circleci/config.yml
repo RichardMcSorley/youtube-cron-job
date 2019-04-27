@@ -3,8 +3,6 @@ jobs:
   deploy:
     docker:
       - image: google/cloud-sdk
-        environment:
-          - GOOGLE_APPLICATION_CREDENTIALS: ${HOME}/gcloud-service-key.json
     steps:
       - checkout
       - run: 
@@ -20,6 +18,7 @@ jobs:
       - run: 
           name: Deploy to Kubernetes
           command: |
+            export GOOGLE_APPLICATION_CREDENTIALS=${HOME}/gcloud-service-key.json
             skaffold run
 workflows:
   version: 2
