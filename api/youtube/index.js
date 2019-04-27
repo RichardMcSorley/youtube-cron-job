@@ -114,16 +114,16 @@ const getChannelDetailsAndUpdateDB = async (query) => {
 };
 
 const getVideosAndUpdateDB = async (query) => {
-  const { items = [] } = await getBySearch(query);
-  for (let index = 0; index < items.length; index++) {
-    const item = items[index];
-    try {
+  try {
+    const { items = [] } = await getBySearch(query);
+    console.log(`Got ${items.length} from query ${query}`)
+    for (let index = 0; index < items.length; index++) {
+      const item = items[index];
       await sendMessage('new_youtube_video', {...videoConstructor(item)})
-    } catch (error) {
-      console.log(error);
-      process.exit(1)
     }
-    
+  } catch (error) {
+    console.log(error);
+    process.exit(1)
   }
   return 'done';
 };
