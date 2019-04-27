@@ -1,7 +1,7 @@
 
 const request = require("request-promise");
 const firebase = require("../firebase");
-const { sendMessage } = require('../mq');
+const { sendMessage, startClient } = require('../mq');
 const YOUTUBE_API_KEY = process.env.YOUTUBE_API_KEY;
 
 const infoConstructor = item => {
@@ -116,7 +116,8 @@ const getChannelDetailsAndUpdateDB = async (query) => {
 const getVideosAndUpdateDB = async (query) => {
   try {
     const { items = [] } = await getBySearch(query);
-    console.log(`Got ${items.length} from query ${query}`)
+    console.log(`Got ${items.length} from query ${query}`);
+    await startClient();
     for (let index = 0; index < items.length; index++) {
       const item = items[index];
       await sendMessage('new_youtube_video', {...videoConstructor(item)})
