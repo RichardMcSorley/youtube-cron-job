@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: koreanow-regular-videos
 spec:
-  schedule: "0,15,30,45 * * * *"
+  schedule: "5,20,35,50 * * * *"
   suspend: false
   concurrencyPolicy: Forbid
   jobTemplate:
