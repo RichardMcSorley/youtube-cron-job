@@ -2,9 +2,9 @@ apiVersion: skaffold/v1beta8
 kind: Config
 build:
   googleCloudBuild:
-    projectId: dongdongchat
+    projectId: jinjaio
   artifacts:
-  - image: gcr.io/dongdongchat/youtube-cron-job
+  - image: gcr.io/jinjaio/youtube-cron-job
 
 deploy:
   kubectl:
