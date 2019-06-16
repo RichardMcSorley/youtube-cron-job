@@ -12,7 +12,7 @@ spec:
         spec:
           containers:
           - name: koreanow-channel-info
-            image: gcr.io/dongdongchat/youtube-cron-job
+            image: gcr.io/jinjaio/youtube-cron-job
             env:
               - name: FUNC_NAME
                 value: "getChannelDetailsAndUpdateDB"
