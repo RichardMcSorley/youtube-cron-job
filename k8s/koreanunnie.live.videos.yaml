@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: koreanunnie-live-videos
 spec:
-  schedule: "* * * * *"
+  schedule: "*/5 * * * *"
   suspend: false
   concurrencyPolicy: Forbid
   jobTemplate:
