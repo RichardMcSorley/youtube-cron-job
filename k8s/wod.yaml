@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: word-of-the-day
 spec:
-  schedule: "0 22 * * *"
+  schedule: "0 23 * * *"
   suspend: false
   concurrencyPolicy: Forbid
   jobTemplate:
@@ -12,7 +12,7 @@ spec:
         spec:
           containers:
           - name: word-of-the-day
-            image: gcr.io/dongdongchat/youtube-cron-job
+            image: gcr.io/jinjaio/youtube-cron-job
             env:
               - name: FUNC_NAME
                 value: "getWord"

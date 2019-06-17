@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: koreanunnie-live-videos
 spec:
-  schedule: "*/5 * * * *"
+  schedule: "*/15 * * * *"
   suspend: false
   concurrencyPolicy: Forbid
   jobTemplate:
@@ -24,6 +24,6 @@ spec:
               - configMapRef:
                   name: firebase
               - configMapRef:
-                  name: youtube-api-key-2
+                  name: youtube-api-key-4
           restartPolicy: OnFailure
           hostNetwork: true

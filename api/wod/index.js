@@ -1,7 +1,7 @@
 const request = require("request");
 const moment = require('moment');
 const convert = require('xml-js');
-const { sendMessage } = require('../mq')
+const { sendMessage, startClient} = require('../mq')
 
 const getWord = ()=>{
     return new Promise((resolve, reject)=>{
@@ -27,13 +27,12 @@ const getWord = ()=>{
                     sound: phrasesound
                 }
             }
-            
-            sendMessage('wod', newWord).then(resolve).catch(reject)
+            startClient().then((client)=>{
+                sendMessage({client, topic: 'wod', data: newWord}).then(resolve).catch(reject);
+            }).catch(reject);
         });
     })
     
-    
-
 }
 const pullText = (obj)=>{
     return obj._text
